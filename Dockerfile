@@ -1,4 +1,4 @@
-FROM headscale/headscale:latest
+FROM headscale/headscale:0.22.3
 
 RUN apt-get update \
     && apt-get install -yq --no-install-recommends \
