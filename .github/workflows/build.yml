@@ -2,12 +2,15 @@ name: Docker Build and Push
 
 on:
   push:
+    branches:
+      - "main"
+    tags:
+      - "v*.*.*"
 
 env:
   IMAGE_REGISTRY: quay.io
   IMAGE_NAMESPACE: andreygubarev
   IMAGE_NAME: headscale
-  IMAGE_TAG: latest
 
 jobs:
   build:
@@ -20,12 +23,22 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
+      - name: Determine tags
+        id: get_tags
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/v}
+            echo ::set-output name=TAGS::"latest $VERSION"
+          else
+            echo ::set-output name=TAGS::"latest"
+          fi
+
       - name: Build image
         id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
           image: ${{ env.IMAGE_NAME }}
-          tags: ${{ env.IMAGE_TAG }}
+          tags: ${{ steps.get_tags.outputs.TAGS }}
           archs: amd64, arm64
           dockerfiles: |
             ./Dockerfile
