@@ -28,7 +28,7 @@ jobs:
         run: |
           if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/v}
-            echo ::set-output name=TAGS::"latest $VERSION"
+            echo ::set-output name=TAGS::"$VERSION"
           else
             echo ::set-output name=TAGS::"latest"
           fi
