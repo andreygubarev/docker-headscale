@@ -36,13 +36,14 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Determine tags
-        id: get_tags
-        run: |
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-          [ "$VERSION" == "main" ] && VERSION=latest
-          echo "TAG=$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha
 
       - name: Build and push
         uses: docker/build-push-action@v4
@@ -50,4 +51,5 @@ jobs:
           context: .
           push: true
           platforms: ${{ env.IMAGE_PLATFORMS }}
-          tags: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ steps.get_tags.outputs.TAG }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
