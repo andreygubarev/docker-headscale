@@ -8,7 +8,7 @@ on:
     types: [published]
 
 env:
-  IMAGE_REGISTRY: quay.io
+  IMAGE_REGISTRY: ghcr.io
   IMAGE_NAMESPACE: andreygubarev
   IMAGE_NAME: headscale
 
@@ -33,7 +33,7 @@ jobs:
       - name: Login to Docker Registry
         uses: docker/login-action@v2
         with:
-          registry: ghcr.io
+          registry: ${{ env.IMAGE_REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -53,4 +53,4 @@ jobs:
           context: .
           push: true
           platforms: ${{ matrix.platforms }}
-          tags: ghcr.io/${{ github.repository }}:${{ steps.get_tags.outputs.TAG }}
+          tags: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ steps.get_tags.outputs.TAG }}
