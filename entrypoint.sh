@@ -11,11 +11,11 @@ ip_prefixes:
   - 100.64.0.0/10
 
 dns_config:
+  magic_dns: ${HEADSCALE_MAGICDNS_ENABLED}
   override_local_dns: true
   nameservers:
     - 1.1.1.1
-  magic_dns: true
-  base_domain: ${HEADSCALE_DOMAIN}
+  base_domain: ${HEADSCALE_MAGICDNS_DOMAIN}
 
 derp:
   urls:
