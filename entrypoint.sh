@@ -1,11 +1,11 @@
 #!/bin/sh
 
 cat << EOF > /etc/headscale/config.yaml
-server_url: ${HEADSCALE_SERVER_URL}
-listen_addr: ${HEADSCALE_LISTEN_ADDR}
+server_url: ${HEADSCALE_SERVER}
+listen_addr: ${HEADSCALE_BIND_ADDR}:${HEADSCALE_BIND_PORT}
 
-db_type: ${HEADSCALE_DB_TYPE}
-db_path: ${HEADSCALE_DB_PATH}
+db_type: ${HEADSCALE_DATABASE_TYPE}
+db_path: ${HEADSCALE_DATABASE_PATH}
 
 ip_prefixes:
   - 100.64.0.0/10
@@ -15,7 +15,7 @@ dns_config:
   nameservers:
     - 1.1.1.1
   magic_dns: true
-  base_domain: ${HEADSCALE_BASE_DOMAIN}
+  base_domain: ${HEADSCALE_DOMAIN}
 
 derp:
   urls:
