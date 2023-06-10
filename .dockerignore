@@ -1,0 +1,11 @@
+.dockerignore
+.DS_Store
+.git
+.github
+.gitignore
+.gitmodules
+
+Dockerfile
+
+LICENSE
+README.md
