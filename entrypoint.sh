@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cat << EOF > /etc/headscale/config.yaml
-server_url: ${HEADSCALE_SERVER}
+server_url: ${HEADSCALE_ADVERTISE_PROTO}://${HEADSCALE_ADVERTISE_ADDR}:${HEADSCALE_ADVERTISE_PORT}
 listen_addr: ${HEADSCALE_BIND_ADDR}:${HEADSCALE_BIND_PORT}
 
 db_type: ${HEADSCALE_DATABASE_TYPE}
