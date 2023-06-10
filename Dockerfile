@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM headscale/headscale:0.22.3
 
 LABEL org.opencontainers.image.source=https://github.com/andreygubarev/docker-headscale
@@ -12,7 +13,8 @@ RUN apt-get update \
     && echo "LC_ALL=en_US.UTF-8" >> /etc/environment \
     && echo "LANG=en_US.UTF-8" > /etc/locale.conf \
     && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen \
-    && locale-gen en_US.UTF-8
+    && locale-gen en_US.UTF-8 \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
