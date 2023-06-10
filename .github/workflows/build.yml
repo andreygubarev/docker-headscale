@@ -11,15 +11,12 @@ env:
   IMAGE_REGISTRY: ghcr.io
   IMAGE_NAMESPACE: andreygubarev
   IMAGE_NAME: headscale
+  IMAGE_PLATFORMS: linux/amd64,linux/arm64
 
 jobs:
   build:
     name: Build and push multi-arch image
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        platforms: [linux/amd64, linux/arm64]
 
     steps:
       - uses: actions/checkout@v3
@@ -48,9 +45,9 @@ jobs:
           fi
 
       - name: Build and push
-        uses: docker/build-push-action@1104d471370f9806843c095c1db02b5a90c5f8b6
+        uses: docker/build-push-action@4
         with:
           context: .
           push: true
-          platforms: ${{ matrix.platforms }}
+          platforms: ${{ env.IMAGE_PLATFORMS }}
           tags: ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ steps.get_tags.outputs.TAG }}
