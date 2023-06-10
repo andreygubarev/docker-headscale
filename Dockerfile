@@ -1,5 +1,9 @@
 FROM headscale/headscale:0.22.3
 
+LABEL org.opencontainers.image.source=https://github.com/andreygubarev/docker-headscale
+LABEL org.opencontainers.image.description="Docker image for Headscale"
+LABEL org.opencontainers.image.licenses=MIT
+
 RUN apt-get update \
     && apt-get install -yq --no-install-recommends \
         ca-certificates \
