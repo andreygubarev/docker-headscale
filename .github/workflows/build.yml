@@ -44,6 +44,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: false
+          push: true
           platforms: ${{ matrix.platforms }}
           tags: ghcr.io/${{ github.repository }}:${{ steps.get_tags.outputs.TAG }}
